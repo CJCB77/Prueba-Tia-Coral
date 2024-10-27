@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { signIn } = useAuth();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -14,7 +17,11 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
+    console.log({
+      email,
+      password,
+    });
+    signIn({ email, password });
   };
 
   return (

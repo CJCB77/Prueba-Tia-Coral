@@ -1,9 +1,59 @@
-import React from "react";
+import { useState } from "react";
 
 function TokenHistory() {
+  const [search, setSearch] = useState("");
+  const [filterField, setFilterField] = useState("user");
+
+  const tokens = [
+    {
+      user: "John Doe",
+      token: "123456",
+      generatedAt: "2021-09-01 12:00:00",
+      expiresAt: "2021-09-01 12:30:00",
+      usedAt: "2021-09-01 12:15:00",
+      status: "Usado",
+    },
+    {
+      user: "Jane Doe",
+      token: "654321",
+      generatedAt: "2021-09-01 12:00:00",
+      expiresAt: "2021-09-01 12:30:00",
+      usedAt: "2021-09-01 12:15:00",
+      status: "Usado",
+    },
+  ];
+
+  const filteredTokens = tokens.filter((token) => {
+    const fieldToFilter = filterField === "user" ? token.user : token.token;
+    return fieldToFilter.toLowerCase().includes(search.toLowerCase());
+  });
+
   return (
     <main>
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-4/5 mx-auto mt-12">
+      <div className="mt-12 w-4/5 mx-auto">
+        <div className="flex gap-2 mb-2">
+          {/* Dropdown to select filter field */}
+          <select
+            value={filterField}
+            onChange={(e) => setFilterField(e.target.value)}
+            className="border border-gray-200 p-2 rounded-lg"
+          >
+            <option value="user">Usuario</option>
+            <option value="token">Token</option>
+          </select>
+
+          {/* Search input */}
+          <input
+            type="text"
+            placeholder="Buscar..."
+            className="border border-gray-200 p-2 w-full rounded-lg"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-4/5 mt-8 mx-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -28,32 +78,39 @@ function TokenHistory() {
             </tr>
           </thead>
           <tbody>
-            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                John Doe
-              </th>
-              <td class="px-6 py-4">123456</td>
-              <td class="px-6 py-4">2021-09-01 12:00:00</td>
-              <td class="px-6 py-4">2021-09-01 12:30:00</td>
-              <td class="px-6 py-4">2021-09-01 12:15:00</td>
-              <td class="px-6 py-4">Usado</td>
-            </tr>
-            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Jane Doe
-              </th>
-              <td class="px-6 py-4">654321</td>
-              <td class="px-6 py-4">2021-09-01 12:00:00</td>
-              <td class="px-6 py-4">2021-09-01 12:30:00</td>
-              <td class="px-6 py-4">2021-09-01 12:15:00</td>
-              <td class="px-6 py-4">Usado</td>
-            </tr>
+            {filteredTokens.map((token, index) => (
+              <tr key={index}>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div
+                    class="flex items
+                        -center"
+                  >
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">
+                        {token.user}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">{token.token}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">{token.generatedAt}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">{token.expiresAt}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">{token.usedAt}</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    {token.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
