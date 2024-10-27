@@ -5,8 +5,8 @@ function Navbar() {
     <nav className="bg-red-600 flex py-2 px-6 shadow-sm">
       <h1 className="mr-5 text-lg font-bold text-white">
         <a href="#">
-          <i className="fa-solid fa-key mr-2"></i>
-          Clave Virtual
+          <i className="fa-solid fa-unlock mr-2"></i>
+          Prueba Tia
         </a>
       </h1>
       <div className="ml-auto">
