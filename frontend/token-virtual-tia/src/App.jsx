@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import TempKey from "./pages/TempKey";
+import TokenHistory from "./pages/TokenHistory";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Register />} />
             <Route path="/clave" element={<TempKey />} />
+            <Route path="/historial" element={<TokenHistory />} />
           </Routes>
         </div>
       </Router>
