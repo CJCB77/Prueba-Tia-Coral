@@ -1,5 +1,6 @@
 import { sequelize } from "../db/db.js";
 import { DataTypes } from "sequelize";
+import { Token } from "./Token.js";
 
 export const User = sequelize.define('userAccount', {
     id: {
@@ -20,4 +21,10 @@ export const User = sequelize.define('userAccount', {
         type: DataTypes.BOOLEAN,
         defaultValue: true
     }
+})
+
+Token.belongsTo(User,{
+    foreignKey:'userId',
+    onDelete:'cascade',
+    allowNull:false
 })

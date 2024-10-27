@@ -1,6 +1,10 @@
 import { User } from '../models/User.js'
 import bcrypt from 'bcryptjs'
 import { createAccessToken } from '../libs/jwt.js'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export const login = async (req, res) => {
   const { email, password } = req.body
@@ -15,7 +19,11 @@ export const login = async (req, res) => {
   const token = await createAccessToken({
     id: userFound.id
   })
-  res.cookie('token', token)
+  res.cookie('token', token, {
+    sameSite: 'none',
+    secure: true,
+    httpOnly: false
+  })
   res.status(200).json({
     id: userFound.id,
     email: userFound.email
@@ -51,3 +59,27 @@ export const register = async (req, res) => {
   }
 }
 
+export const verifyToken = async (req, res) => {
+  const { token } = req.cookies
+
+  if (!token) {
+    return res.status(401).json({ message: ['No hay token'] })
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+    if (err) {
+      return res.status(401).json({ message: ['Token invalido'] })
+    }
+
+    const userFound = await User.findByPk(user.id)
+    if (!userFound) {
+      return res.status(401).json({ message: ['Usuario no encontrado'] })
+    }
+
+    return res.status(200).json({
+      id: userFound.id,
+      email: userFound.email
+    })
+    
+  })
+}
