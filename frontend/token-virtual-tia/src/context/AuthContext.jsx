@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { registerUser, loginUser, verifyToken } from "../services/authApi";
+import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const signUp = async (data) => {
     try {
@@ -34,6 +36,8 @@ export const AuthProvider = ({ children }) => {
       const user = await loginUser(data);
       setUser(user);
       setIsAuthenticated(true);
+      navigate('/')
+      
     } catch (error) {
       console.log(error);
     }
