@@ -3,8 +3,8 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import { sequelize } from './db/db.js'
-import './models/User.js'
-import './models/Token.js'
+
+import authRoutes from './routes/authRoutes.js'
 
 dotenv.config()
 
@@ -13,6 +13,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
+
+//Routes
+app.use('/auth', authRoutes)
 
 const PORT = process.env.PORT || 3000
 
