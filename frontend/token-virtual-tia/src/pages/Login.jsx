@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -71,12 +72,12 @@ function Login() {
           >
             Olvido su contraseña?
           </a>
-          <a
-            href="/register"
+          <Link
+            to="/registro"
             className="text-xs font-light hover:underline decoration-gray-500"
           >
             ¿No tienes cuenta? Registrate
-          </a>
+          </Link>
         </div>
       </footer>
     </form>

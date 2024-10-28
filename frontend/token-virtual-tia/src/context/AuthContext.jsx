@@ -1,5 +1,10 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerUser, loginUser, verifyToken } from "../services/authApi";
+import {
+  registerUser,
+  loginUser,
+  verifyToken,
+  logoutUser,
+} from "../services/authApi";
 import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
 
@@ -36,8 +41,20 @@ export const AuthProvider = ({ children }) => {
       const user = await loginUser(data);
       setUser(user);
       setIsAuthenticated(true);
-      navigate('/')
-      
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const logOut = async () => {
+    try {
+      await logoutUser();
+      console.log("User logged out");
+      setUser(null);
+      setIsAuthenticated(false);
+      Cookies.remove("token");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
@@ -56,14 +73,14 @@ export const AuthProvider = ({ children }) => {
       try {
         const response = await verifyToken(cookies.token);
         if (!response) {
-          console.log(response)
-          console.log("No token found")
+          console.log(response);
+          console.log("No token found");
           setIsAuthenticated(false);
           setLoading(false);
           return;
         }
         setIsAuthenticated(true);
-        console.log(response)
+        console.log(response);
         setUser(response);
         setLoading(false);
       } catch (error) {
@@ -84,6 +101,7 @@ export const AuthProvider = ({ children }) => {
         loading,
         signUp,
         signIn,
+        logOut,
         isAuthenticated,
         errors,
       }}
