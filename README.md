@@ -8,6 +8,7 @@ Las tecnologias utilizadas para la app fueron Nodejs,Express,PostgreSQL,React y 
 <p>
 La app cuenta con autenticacion de usuario utilizando JWT tokens y cookies  
 </p>
+
 ![Captura de pantalla 2024-10-27 211004](https://github.com/user-attachments/assets/969d0270-2828-41d6-bc5e-7ee7e24365e3)
 
 <p>Tambien un registro para creacion de usuario</p>
