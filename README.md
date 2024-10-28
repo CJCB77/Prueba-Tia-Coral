@@ -2,7 +2,7 @@
 Prueba Tecnica Token Virtual para Almacenes Tia
 
 <h2>Aplicacion web que genera un Token Virtual temporal cada 60 segundos</h2>
-Las tecnologias utilizadas para la app fueron Nodejs,Express,PostgreSQL,React y Tailwind.css
+Las tecnologias utilizadas para desarrollar la app fueron Nodejs,Express,PostgreSQL,React y Tailwind.css
 
 <h4>Autenticacion de usuario</h4>
 <p>
@@ -25,11 +25,14 @@ La app cuenta con autenticacion de usuario utilizando JWT tokens y cookies
 
 ![image](https://github.com/user-attachments/assets/4e669b65-f686-43c9-b347-fcce343dd77c)
 
-![image](https://github.com/user-attachments/assets/e9d91710-3c94-4dbe-b796-eb85bb1ed7e4)
+![Captura de pantalla 2024-10-27 213154](https://github.com/user-attachments/assets/484bd1ed-be4f-4df3-b6e6-b17570e5dc49)
+
 
 <p>Esta clave se utilizaria para validar transacciones, aqui hay ua simulacion del endpoint de "/usarToken/", donde si la clave genrada aun es valida(no ha expirado) el servidor responde con un mensaje exitoso</p>
 
-![image](https://github.com/user-attachments/assets/1da115af-c9d1-46ab-a40b-2fef1a909153)
+![Captura de pantalla 2024-10-27 213207](https://github.com/user-attachments/assets/40ae2947-a097-4560-aa7e-585ec2f5be40)
+
+
 
 <h4>Tabla de uso y generacion de token</h4>
 <p>El otro boton del dashboard nos lleva a un listado de todos los tokens generados por el usuario, contiene informacion del token, fecha y tiempo de generacion,expiracion y uso</p>
