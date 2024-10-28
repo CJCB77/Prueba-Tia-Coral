@@ -1,37 +1,51 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { generateToken } from "../services/tokenApi";
+import { useAuth } from "../context/AuthContext";
 
 function TokenDisplay() {
-  const [progress, setProgress] = useState(100); // Progress bar percentage
-  const [tokenIndex, setTokenIndex] = useState(0); // Current token index
+  const [progress, setProgress] = useState(null); // Progress bar percentage
+  const [token, setToken] = useState(null)
   const totalTime = 60; // Total time in seconds for each token
+  const {user} = useAuth()
 
-  // Sample token list
-  const tokenList = ['088192', '482917', '193824', '749202', '382019'];
-    
-  // Function to update token and reset progress
-  const updateToken = () => {
-    setTokenIndex((prevIndex) => (prevIndex + 1) % tokenList.length); // Move to next token
-    setProgress(100); // Reset progress bar
+  // Function to fetch a new token and reset progress
+  const fetchNewToken = async () => {
+    try {
+      const data = await generateToken(user.id);
+      console.log(data)
+      setToken(data.token.value);
+
+      const createdAt = new Date(data.token.createdAt);
+      // Calculate remaining time based on existing token's createdAt
+      const elapsedTime = Math.floor((new Date() - createdAt) / 1000);
+      const remainingTime = Math.max(totalTime - elapsedTime, 0); // Ensure positive value
+      setProgress((remainingTime / totalTime) * 100); // Update token state
+ 
+    } catch (error) {
+      console.error("Error generating token:", error);
+    }
   };
 
   useEffect(() => {
+    fetchNewToken();
+
     const interval = setInterval(() => {
       setProgress((prevProgress) => {
         if (prevProgress <= 0) {
-          updateToken(); // Change token when progress reaches 0
-          return 100;
+          fetchNewToken(); // Fetch a new token when progress reaches 0
+          return 100; // Reset progress to full
         }
-        return prevProgress - (100 / totalTime);
+        return prevProgress - 100 / totalTime;
       });
     }, 1000);
 
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, []);
+    return () => clearInterval(interval); // Clean up interval on component unmount
+  }, [user])
 
   return (
     <div className="flex flex-col items-center">
       <span className="text-5xl font-semibold mb-2">
-        {tokenList[tokenIndex]} {/* Display the current token */}
+        {token || "Generating..."} {/* Display current token or loading text */}
       </span>
       <div className="w-full h-2 bg-gray-300 rounded">
         <div
