@@ -2,8 +2,10 @@
 Prueba Tecnica Token Virtual para Almacenes Tía
 
 <h2>Aplicacion web que genera un Token Virtual temporal cada 60 segundos</h2>
-Las tecnologias utilizadas para desarrollar la app fueron para el backend Nodejs,Express,PostgreSQL junto con la libreria Sequelize que permite utilizar un ORM con nodejs y SQL.
-Para el frontend se utilizo React.js para las interfaces y Tailwind.js para los estilos.
+<p>Las tecnologias utilizadas para desarrollar la app fueron para el backend Nodejs,Express,PostgreSQL junto con la libreria Sequelize que permite utilizar un ORM con nodejs y SQL.
+</p>
+<p>Para el frontend se utilizo React.js para las interfaces y Tailwind.css para los estilos.</p>
+  
 
 <h4>Autenticacion de usuario</h4>
 <p>
