@@ -37,3 +37,9 @@ La app cuenta con autenticacion de usuario utilizando JWT tokens y cookies
 <h4>Tabla de uso y generacion de token</h4>
 <p>El otro boton del dashboard nos lleva a un listado de todos los tokens generados por el usuario, contiene informacion del token, fecha y tiempo de generacion,expiracion y uso</p>
 
+![image](https://github.com/user-attachments/assets/8c117cab-a0d5-40a6-93c9-3f4373288cd0)
+
+Se puede filtrar dinamicamente por campos como token
+![image](https://github.com/user-attachments/assets/f5b50d26-39ed-4f39-a719-6f478a6529d3)
+
+
