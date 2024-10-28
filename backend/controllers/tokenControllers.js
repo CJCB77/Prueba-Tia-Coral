@@ -6,6 +6,26 @@ function generateSixDigitToken () {
   return Math.floor(100000 + Math.random() * 900000).toString()
 }
 
+export const getTokens = async (req, res) => {
+  const userId = req.query.cliente
+  if (!userId) {
+    return res.status(400).json({ error: 'El ID del cliente es necesario' })
+  }
+
+  try {
+    const tokens = await Token.findAll({
+        where: {
+            userId:userId
+        },
+        order: [['createdAt', 'DESC']] 
+    })
+    res.status(200).json(tokens)
+    
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
+}
+
 export const generateToken = async (req, res) => {
   const userId = req.query.cliente // Obtenemos el cliente (userId) de los parámetros de consulta
 
@@ -27,7 +47,7 @@ export const generateToken = async (req, res) => {
 
     // Si existe un token activo, retornarlo
     if (existingToken) {
-      return res.json({ token: existingToken.value })
+      return res.json({ token: existingToken })
     }
 
     // Si no existe un token activo, generamos uno nuevo
@@ -42,15 +62,13 @@ export const generateToken = async (req, res) => {
     })
 
     // Retornar el nuevo token
-    res.json({ token: newToken.value })
+    res.json({ token: newToken})
   } catch (error) {
     console.error('Error al generar o recuperar el token:', error)
-    res
-      .status(500)
-      .json({
-        error: 'Error del servidor al generar o recuperar el token',
-        error
-      })
+    res.status(500).json({
+      error: 'Error del servidor al generar o recuperar el token',
+      error
+    })
   }
 }
 
@@ -99,7 +117,7 @@ export const useToken = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'A ocurrido un error',
-      error:error
+      error: error
     })
   }
 }
